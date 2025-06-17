@@ -196,9 +196,6 @@ def adicionar_vitoria(vencedor):
     except FileNotFoundError:
         print("O arquivo de usuarios nao foi encontrado. Um novo arquivo sera criado")
         linhas_do_arquivo = []
-
-    usuario_atualizado = 0 
-
     novas_linhas_para_escrever = []
     for linha_existente in linhas_do_arquivo:
         linha_sem_quebra = linha_existente.replace('\n', '') #o replace('\n','') retira a quebra de linha no final da string para transformar em uma lista
@@ -267,10 +264,6 @@ def jogo():
     turno_atual = 'Brancas'
 
     while True:
-        if turno_atual == 'Brancas':
-            jogador_atual = jogadorBrancas
-        else:
-            jogador_atual = jogadorPretas
         print("E a vez do jogador das", turno_atual)
         mover_peca(tabuleiro)
         
@@ -321,4 +314,3 @@ main()
 #En Passant
 #Evolucao de Peao para dama (ou outra peca)
 #Afogamento (empate)
-#teste
