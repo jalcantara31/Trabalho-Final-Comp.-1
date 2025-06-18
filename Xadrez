@@ -100,8 +100,12 @@ def mover_peca(tabuleiro):
             print("Tente novamente")
         elif linha_origem == linha_destino and coluna_origem == coluna_destino: #verifica se esta tentando mover para onde a peca ja esta
             print("Tente novamente")
-        elif not verificar_movimento(tabuleiro, linha_origem, coluna_origem, linha_destino, coluna_destino): #verifica se a funcao verificar_movimento retorna True
+        elif verificar_movimento(tabuleiro, linha_origem, coluna_origem, linha_destino, coluna_destino) == False: #verifica se a funcao verificar_movimento retorna True
             print("Movimento invalido. Tente novamente")
+        elif verificar_movimento == 2:
+            tabuleiro[linha_destino][coluna_destino] = 'wQ'
+            tabuleiro[linha_origem][coluna_origem] = '  '
+            movimento_valido = 1 #True
         else:
             tabuleiro[linha_destino][coluna_destino] = peca
             tabuleiro[linha_origem][coluna_origem] = '  '
@@ -128,14 +132,26 @@ def verificar_movimento(tabuleiro, linha_origem, coluna_origem, linha_destino, c
             return True
         if (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == 2 and linha_origem == 1 and tabuleiro[linha_destino][coluna_destino] == '  ' and tabuleiro[linha_destino - 1][coluna_destino] == '  '):
             return True
+        if (abs(coluna_destino - coluna_origem) == 1 and linha_destino - linha_origem == 1 and tabuleiro[linha_destino][coluna_destino] != '  '):
+            return True
     elif peca == 'wP':
-        if (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] == '  '):
+        if (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] == '  ' and linha_destino != 0):
             return True
-        if (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -2 and linha_origem == 6 and tabuleiro[linha_destino][coluna_destino] == '  ' and tabuleiro[linha_destino + 1][coluna_destino] == '  '):
+        if (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -2 and linha_origem == 6 and tabuleiro[linha_destino][coluna_destino] == '  ' and tabuleiro[linha_destino + 1][coluna_destino] == '  ' and linha_destino != 0):
             return True
+        if (abs(coluna_destino - coluna_origem) == 1 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] != '  ' and linha_destino != 0):
+            return True
+        if linha_destino == 0:
+            if not (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] == '  ') and not \
+            (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -2 and linha_origem == 6 and tabuleiro[linha_destino][coluna_destino] == '  ' and tabuleiro[linha_destino + 1][coluna_destino] == '  ') and not\
+            (abs(coluna_destino - coluna_origem) == 1 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] != '  '):
+                return False
+            promocao = input("Para qual peca deseja trocar o peao?")
+            if promocao == 'wQ':
+                tabuleiro[linha_destino][coluna_destino] == 'wQ'
+            return 2
         else:
             return False
-        #adicionar captura de peao
         #adicionar en passant
     elif peca == 'bK' or peca == 'wK':
         if abs(linha_origem - linha_destino) <= 1 and abs(coluna_origem - coluna_destino) <= 1:
@@ -207,7 +223,6 @@ def adicionar_vitoria(vencedor):
             
             if nome_do_usuario == vencedor:
                 num_vitorias += 1 #adiciona uma vitoria ao usuario
-                usuario_atualizado = 1
             novas_linhas_para_escrever.append(nome_do_usuario + ':' + str(num_vitorias) + '\n')
         else:
             novas_linhas_para_escrever.append(linha_existente)
