@@ -85,31 +85,39 @@ def coordenada(coord):
 def mover_peca(tabuleiro):
     movimento_valido = 0 #0 -> False ; 1 -> True
     while not movimento_valido:
-        origem = input("Digite a posição da peça que deseja mover (ex: e2): ").lower()
-        destino = input("Digite a posição de destino (ex: e4): ").lower()
+        origem = input("Digite a posicao da peça que deseja mover (ex: e2): ").lower()
+        destino = input("Digite a posicao de destino (ex: e4): ").lower()
 
-        linha_origem, coluna_origem = coordenada(origem) #traduz a origem
-        linha_destino, coluna_destino = coordenada(destino) #traduz o destino
+        linha_origem, coluna_origem = coordenada(origem)
+        linha_destino, coluna_destino = coordenada(destino)
 
         if linha_origem is None or linha_destino is None:
-            continue #continue volta para o inicio do while
-            
-        peca = tabuleiro[linha_origem][coluna_origem] #essa e a peca que deseja mover
+            continue
+
+        peca = tabuleiro[linha_origem][coluna_origem]
 
         if peca == '  ':
             print("Tente novamente")
-        elif linha_origem == linha_destino and coluna_origem == coluna_destino: #verifica se esta tentando mover para onde a peca ja esta
+        elif linha_origem == linha_destino and coluna_origem == coluna_destino:
             print("Tente novamente")
-        elif verificar_movimento(tabuleiro, linha_origem, coluna_origem, linha_destino, coluna_destino) == False: #verifica se a funcao verificar_movimento retorna True
-            print("Movimento invalido. Tente novamente")
-        elif verificar_movimento == 2:
-            tabuleiro[linha_destino][coluna_destino] = 'wQ'
-            tabuleiro[linha_origem][coluna_origem] = '  '
-            movimento_valido = 1 #True
         else:
-            tabuleiro[linha_destino][coluna_destino] = peca
-            tabuleiro[linha_origem][coluna_origem] = '  '
-            movimento_valido = 1 #True
+            resultado = verificar_movimento(tabuleiro, linha_origem, coluna_origem, linha_destino, coluna_destino)
+            if resultado == False:
+                print("Movimento invalido. Tente novamente")
+            elif resultado == 'promocao':
+                while True:
+                    promocao = input("Para qual peça deseja promover o peão? (Q, R, B, H): ").upper()
+                    if promocao in ['Q', 'R', 'B', 'H']:
+                        tabuleiro[linha_destino][coluna_destino] = 'w' + promocao
+                        tabuleiro[linha_origem][coluna_origem] = '  '
+                        movimento_valido = 1
+                        break
+                    else:
+                        print("Escolha inválida. Use Q (Rainha), R (Torre), B (Bispo), H (Cavalo).")
+            else:
+                tabuleiro[linha_destino][coluna_destino] = peca
+                tabuleiro[linha_origem][coluna_origem] = '  '
+                movimento_valido = 1
 
     exibir_tabuleiro(tabuleiro)
 
@@ -142,14 +150,9 @@ def verificar_movimento(tabuleiro, linha_origem, coluna_origem, linha_destino, c
         if (abs(coluna_destino - coluna_origem) == 1 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] != '  ' and linha_destino != 0):
             return True
         if linha_destino == 0:
-            if not (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] == '  ') and not \
-            (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -2 and linha_origem == 6 and tabuleiro[linha_destino][coluna_destino] == '  ' and tabuleiro[linha_destino + 1][coluna_destino] == '  ') and not\
-            (abs(coluna_destino - coluna_origem) == 1 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] != '  '):
-                return False
-            promocao = input("Para qual peca deseja trocar o peao?")
-            if promocao == 'wQ':
-                tabuleiro[linha_destino][coluna_destino] == 'wQ'
-            return 2
+            if (coluna_destino - coluna_origem == 0 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] == '  ') or \
+               (abs(coluna_destino - coluna_origem) == 1 and linha_destino - linha_origem == -1 and tabuleiro[linha_destino][coluna_destino] != '  '):
+                return 'promocao'
         else:
             return False
         #adicionar en passant
