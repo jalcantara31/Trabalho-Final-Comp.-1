@@ -46,14 +46,14 @@ def menu():
 #a funcao criar_tabuleiro cria o tabuleiro de xadrez padrao utilizando uma lista de listas, onde cada elemento representa uma peca ou casa vazia
 def criar_tabuleiro():
     tabuleiro = [
-        ['bR', 'bH', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
         ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
         ['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  '],
         ['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  '],
         ['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  '],
         ['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  '],
         ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-        ['wR', 'wH', 'wB', 'wQ', 'wK', 'wB', 'wH', 'wR']
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']
     ]
     return tabuleiro
 
@@ -106,8 +106,8 @@ def mover_peca(tabuleiro):
                 print("Movimento invalido. Tente novamente")
             elif resultado == 'promocao':
                 while True:
-                    promocao = input("Para qual peça deseja promover o peão? (Q, R, B, H): ").upper()
-                    if promocao in ['Q', 'R', 'B', 'H']:
+                    promocao = input("Para qual peça deseja promover o peão? (Q, R, B, N): ").upper()
+                    if promocao in ['Q', 'R', 'B', 'N']:
                         tabuleiro[linha_destino][coluna_destino] = 'w' + promocao
                         tabuleiro[linha_origem][coluna_origem] = '  '
                         movimento_valido = 1
@@ -132,7 +132,7 @@ def verificar_movimento(tabuleiro, linha_origem, coluna_origem, linha_destino, c
     elif peca == 'bB' or peca == 'wB':
         if abs(linha_origem - linha_destino) == abs(coluna_origem - coluna_destino):
             return True
-    elif peca == 'bH' or peca == 'wH':
+    elif peca == 'bN' or peca == 'wN':
         if (abs(coluna_origem - coluna_destino == 2) and abs(linha_origem - linha_destino == 1) or (abs(coluna_origem - coluna_destino == 1) and abs(linha_origem - linha_destino == 2))):
             return True
     elif peca == 'bP':
