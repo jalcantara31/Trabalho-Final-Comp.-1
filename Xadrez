@@ -253,7 +253,7 @@ def verificar_usuario_existe(usuario):
         return 0
     return 0
 
-
+import random as rdm
 # a funcao jogo organiza todas as funcoes relacionadas a partida, dentre elas as de tabuleiro
 def jogo():
     jogadores_validados = 0 # 0 -> false ; 1 -> true
@@ -261,28 +261,39 @@ def jogo():
     jogadorPretas = ""
 
     while not jogadores_validados: #enquanto nao define os jogadores
-        jogadorBrancas = input('Jogador das Brancas: ')
-        if not verificar_usuario_existe(jogadorBrancas):
+        jogador1 = input('Jogador 1: ')
+        if not verificar_usuario_existe(jogador1):
             print("Usuario nao cadastrado")
             return None
 
-        jogadorPretas = input('Jogador das Pretas: ')
-        if not verificar_usuario_existe(jogadorPretas):
+        jogador2 = input('Jogador 2: ')
+        if not verificar_usuario_existe(jogador2):
             print("Usuario nao encontrado")
             return None
         
-        if jogadorBrancas == jogadorPretas:
+        if jogador2 == jogador1:
             print("Nao e possivel jogar contra si mesmo")
         else:
             jogadores_validados = 1 
-
+    brancas=rdm.choice([1,2])
+    if brancas == 1:
+        jogadorBrancas=jogador1
+        jogadorPretas=jogador2
+        print('Jogador 1: Brancas \nJogador 2: Pretas')
+    elif brancas == 2:
+        jogadorBrancas=jogador2
+        jogadorPretas=jogador1
+        print('Jogador 1: Pretas \nJogador 2: Brancas')
     tabuleiro = criar_tabuleiro()
     exibir_tabuleiro(tabuleiro)
     
     turno_atual = 'Brancas'
 
     while True:
-        print("E a vez do jogador das", turno_atual)
+        if turno_atual=='Brancas':
+            print(f"E a vez de {jogadorBrancas}")
+        elif turno_atual=='Pretas':
+            print(f"E a vez de {jogadorPretas}")
         mover_peca(tabuleiro)
         
         if fimdejogo(tabuleiro): #se a funcao fimdejogo retornar 1(True)-> o jogo acabou
@@ -323,13 +334,3 @@ def main():
             print("Opcao Invalida")
 
 main()
-
-
-
-#O que falta:
-#Peao captura peca
-#Nao pode se manter em xeque
-#En Passant
-#Evolucao de Peao para dama (ou outra peca)
-#Afogamento (empate)
-#git
