@@ -33,13 +33,13 @@ def instrucoes():
 
 #a funcao menu exibe as opcoes que o usuario pode escolher, recebe a escolha do usuario e retorna a opcao escolhida
 def menu():
-    print("\nEscolha uma opção:")
-    print("1. Criar Usuário")
-    print("2. Instruções do Jogo")
+    print("\nEscolha uma opcao:")
+    print("1. Criar Usuario")
+    print("2. Instrucoes do Jogo")
     print("3. Sair")
     print("4. Jogar")
-    print("5. Mostrar usuários")
-    op = input("Digite o número da opção: ")
+    print("5. Mostrar usuarios e seus numeros de vitorias")
+    op = input("Digite o numero da opcao: ")
     return op
 
 
@@ -54,15 +54,16 @@ def criar_tabuleiro():
         ['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  '],
         ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
         ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']
-    ]
+        ]
     return tabuleiro
-
+#a nomenclatura utilizada para cada peca foi escolhida com base na oficial do xadrez. P: Peão ; R: Torre ; N: Cavalo ; B: Bispo ; Q: Rainha ; K: Rei. b: Pretas ; w: Brancas
+# wP, por exemplo, representa o peao branco
 
 #a funcao exibir tabuleiro printa o proprio tabuleiro junto com as coordenadas das linhas e colunas
 def exibir_tabuleiro(tabuleiro):
-    print("\n  a  b  c  d  e  f  g  h")
+    print("\n  a  b  c  d  e  f  g  h") 
     for i in range(8):
-        linha = str(8 - i) + ' '
+        linha = str(8 - i) + " "
         for j in range(8):
             linha += tabuleiro[i][j] + ' '
         print(linha + str(8 - i))
@@ -313,24 +314,25 @@ def jogo():
     return vencedor
 
 
-def main():
+def main(): #funcao principal
     while True:
-        op = menu()        
-        if op == '1':
+        op = menu() # chama a funcao menu para definir a escolha do usuario
+        if op == '1': # criar usuario
             nome = usuario()
             print(nome, "seu usuário foi criado com sucesso")
-        elif op == '2':
+        elif op == '2': #instrucoes do jogo
             instrucoes()
-        elif op == '3':
+        elif op == '3': #sair
             print("Obrigado por jogar")
             break
-        elif op == '4':
+        elif op == '4': #jogar
             vencedor = jogo()
             if vencedor:
                 print("Vitoria de", vencedor)
-        elif op == '5':
+        elif op == '5': #mostrar usuarios cadastrados e seu numero de vitorias
             mostrar_usuarios()
         else:
             print("Opcao Invalida")
 
-main()
+if __name__ == "__main__": # exigencia do enunciado do trabalho
+    main()
