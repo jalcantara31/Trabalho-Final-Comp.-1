@@ -1,2 +1,3 @@
-Joao:2
-Fernanda:0
+
+joao:0
+stela:1

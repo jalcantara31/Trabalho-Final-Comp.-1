@@ -1,6 +1,6 @@
 #a funcao usuario recebe o nome do usuario e adiciona o nome ao arquivo usuarios.txt. Alem do nome e adicionado o numero de vitorias, que comeca em 0
 def usuario():
-    nome = input("Digite seu nome: ")
+    nome = input("Digite seu nome: ").lower()
     f = open('usuarios.txt', 'a')
     f.write(nome + ':0\n')
     print("Olá,", nome, ",bem-vindo!!")
@@ -28,7 +28,6 @@ def instrucoes():
     print("A rainha se move em linhas retas ou em diagonais quantas casas quiser")
     print("O Rei se move apenas 1 casa para qualquer direção")
     print("Quando um peão chega ao extremo do tabuleiro o jogador pode trocá-lo por qualquer outra peca, desde que nao seja por um rei")
-    print("En Passant: Um peão que acabou de avançar 2 casas e parou ao lado de outro pode ser capturado pelo outro")
     print('\n')
 
 #a funcao menu exibe as opcoes que o usuario pode escolher, recebe a escolha do usuario e retorna a opcao escolhida
@@ -180,10 +179,10 @@ def fimdejogo(tabuleiro):
                 rei_preto = 1 #True
     
     if not rei_preto: #if rei preto == 0
-        print("Parabéns! As peças brancas venceram!")
+        print("Parabens! As peças brancas venceram!")
         return 1 #retorna True
     elif not rei_branco: #if rei branco ==0
-        print("Parabéns! As peças pretas venceram!")
+        print("Parabens! As peças pretas venceram!")
         return 1 #retorna True
     return 0 #retorna False
 
@@ -254,6 +253,7 @@ def verificar_usuario_existe(usuario):
         return 0
     return 0
 
+
 import random as rdm
 # a funcao jogo organiza todas as funcoes relacionadas a partida, dentre elas as de tabuleiro
 def jogo():
@@ -262,12 +262,12 @@ def jogo():
     jogadorPretas = ""
 
     while not jogadores_validados: #enquanto nao define os jogadores
-        jogador1 = input('Jogador 1: ')
+        jogador1 = input('Jogador 1: ').lower()
         if not verificar_usuario_existe(jogador1):
             print("Usuario nao cadastrado")
             return None
-
-        jogador2 = input('Jogador 2: ')
+        
+        jogador2 = input('Jogador 2: ').lower()
         if not verificar_usuario_existe(jogador2):
             print("Usuario nao encontrado")
             return None
@@ -319,7 +319,7 @@ def main(): #funcao principal
         op = menu() # chama a funcao menu para definir a escolha do usuario
         if op == '1': # criar usuario
             nome = usuario()
-            print(nome, "seu usuário foi criado com sucesso")
+            print(nome, "seu usuario foi criado com sucesso")
         elif op == '2': #instrucoes do jogo
             instrucoes()
         elif op == '3': #sair
