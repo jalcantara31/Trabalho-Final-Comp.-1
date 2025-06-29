@@ -1,3 +1,2 @@
-
 joao:0
-stela:1
+stela:0

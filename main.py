@@ -10,12 +10,15 @@ def usuario():
 
 #a funcao mostrar_usuarios le o arquivo usuarios.txt e mostra o conteudo do arquivo
 def mostrar_usuarios():
-    f=open('usuarios.txt','r')
-    conteudo_para_mostrar = ""
-    for linha in f:
-        conteudo_para_mostrar = conteudo_para_mostrar + linha
-    print(conteudo_para_mostrar)
-    f.close()
+    try:
+        f=open('usuarios.txt','r')
+        conteudo_para_mostrar = ""
+        for linha in f:
+            conteudo_para_mostrar = conteudo_para_mostrar + linha
+        f.close()
+        return(f"\n{conteudo_para_mostrar}")
+    except FileNotFoundError:
+        return('Nao existem usuarios cadastrados')
 
 
 #a funcao instrucoes mostra as regras do jogo
@@ -330,7 +333,7 @@ def main(): #funcao principal
             if vencedor:
                 print("Vitoria de", vencedor)
         elif op == '5': #mostrar usuarios cadastrados e seu numero de vitorias
-            mostrar_usuarios()
+            print(mostrar_usuarios())
         else:
             print("Opcao Invalida")
 
